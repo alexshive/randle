@@ -1,10 +1,10 @@
 # Randle
 
-Guess the 5 letter word in 5 tries, similar to Wordle ...with extras. Uses existing list of words so there no longer is a need to wait for more challenges. You can also create your own challenge with various settings. Also this is completely ad-free to keep you from being distracted.
+Similar to Wordle ...with extras. Uses existing list of words with extra features. 
 
-Uses a mix of next.js and tailwindcss. Can run on static page and is flexible to be easily ported to native apps.
+Built with React and Tailwind. Can run on static page and is flexible to be easily ported to native apps.
 
-## Features
+## Upcoming features
 - Customizable themes
 - Light/dark mode
 - Customizable responses
@@ -14,8 +14,4 @@ Uses a mix of next.js and tailwindcss. Can run on static page and is flexible to
 - Story mode (daily)
 - Language options
 - Extra animations for winning/losing
-
-### TODO
-- Randomize word
-- Check win/lose
-- Settings page
+- Native app
