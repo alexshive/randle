@@ -16,7 +16,7 @@ const [game, setGame] = useState<GameInfo>(Game)
 
 function getGuess(params: []) {
   if (game.round >= game.guess.length || game.status == 'WIN') return
-  let newGuess = [...game.guess]
+  const newGuess = [...game.guess]
   newGuess[game.round] = params
   setGame({...game, guess: newGuess })
 }
@@ -27,25 +27,20 @@ function submitGuess(newWord: [string]) {
 
   // go through each word in the submitted word to find used/correct
   newWord.map((w, ind) => {
-    let index = game.correct.indexOf(w)
+    const index = game.correct.indexOf(w)
     if (index >= 0) contains.push(w)
     if (game.correct[ind] == w) correct.push(w)
     letters.push(w)
   })
 
-  // set unique letters
-  let newLetters = [...new Set(letters)]
-  let newContains = [...new Set(contains)]
-  let newCorrect = [...new Set(correct)]
-
-  setLetters(newLetters)
-  setCorrect(newCorrect)
-  setContains(newContains)
+  setLetters([...new Set(letters)])
+  setCorrect([...new Set(contains)])
+  setContains([...new Set(correct)])
 
   // color in the keys that match
   game.keys.map((keyRow, rowIndex) => {
     keyRow.map((key, keyIndex) => {
-      var keyClass = letters.indexOf(key) >= 0 ? "used": ""
+      let keyClass = letters.indexOf(key) >= 0 ? "used": ""
       if (contains.indexOf(key) >= 0) {
         keyClass = "contains"
       }
@@ -58,10 +53,10 @@ function submitGuess(newWord: [string]) {
 
   // color in the guesses
   game.guess.map((_, rowIndex) => {
-    var correct = 0
+    let correct = 0
     game.correct.map((key, keyIndex) => {
-      let guessKey = game.guess[rowIndex][keyIndex]
-      var keyClass = ""
+      const guessKey = game.guess[rowIndex][keyIndex]
+      let keyClass = ""
       if (contains.indexOf(guessKey) >= 0) {
         keyClass = "contains"
       }

@@ -5,12 +5,12 @@ import { GameInfo } from './game';
 
 export interface KeyInfo {
   k: string
-  onClickHandle: (props: any) => void,
+  onClickHandle: (letter: string) => void,
   className: string
 }
 
 function Key({k, onClickHandle, className }: KeyInfo) {
-    return <button type="button" aria-label={"Key: " + k} onClick={onClickHandle}
+    return <button type="button" aria-label={"Key: " + k} onClick={() => onClickHandle(k)}
     className={"key-" + k + " key " + className} value={k}>
     {k}
   </button>
@@ -22,15 +22,14 @@ export default function Keyboard({
   submitGuess
 }: {
   game: GameInfo,
-  getGuess: (props: any) => void,
-  submitGuess: (props: any) => void
+  getGuess: (props: string[]) => void,
+  submitGuess: (props: string[]) => void
 }) {
   const [word, setWord] = useState<string[]>([])
 
-  function handleClick(props: any) {
+  function handleClick(letter: string) {
 
-    let letter = props.target.value
-    let newWord = word.concat()
+    const newWord = word.concat()
 
     if (letter == 'DEL') {
       newWord.pop()
