@@ -1,15 +1,78 @@
 @import "tailwindcss";
 
+h1 {
+  @apply font-black text-5xl;
+}
+
+.keys, .row {
+  @apply flex flex-row;
+  @apply justify-center;
+}
+
+.rows {
+  @apply justify-between;
+}
+
+.col {
+  @apply m-1;
+}
+
+.correct {
+  background-color: rgb(13, 231, 13);
+}
+
+.contains {
+  background-color: orange;
+}
+
+.used {
+  background-color: gray;
+}
+
+.correct, .contains, .used {
+  color: white;
+}
+
+.keyboard {
+  @apply py-10;
+}
+
+.key, .col {
+  @apply border border-solid border-black/[.08] dark:border-white/[.145];
+  @apply transition-colors;
+  @apply flex items-center justify-center;
+  @apply font-bold text-sm sm:text-base;
+  @apply h-10 sm:h-12 px-4 sm:px-5 mb-1 mr-1 ml-1 w-full sm:w-auto md:w-[50px];
+}
+
+.key-ENTER, .key-DEL {
+  @apply pr-10 pl-10;
+}
+
+.key-start {
+  cursor: pointer;
+  @apply border border-solid border-black/[.08] dark:border-white/[.145];
+  @apply h-10 sm:h-12 px-4 sm:px-5 mb-1 mr-1 ml-1 font-bold;
+}
+
+.alert {
+  @apply flex flex-auto justify-center py-2 mb-5;
+  @apply bg-green-900;
+}
+
+.alert.play {
+  @apply hidden;
+}
+
+.key {
+  cursor: pointer;
+  /* @apply hover:bg-[#f2f2f2];
+  @apply dark:hover:bg-[#1a1a1a]; */
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {

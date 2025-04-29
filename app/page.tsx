@@ -1,101 +1,131 @@
-import Image from "next/image";
+"use client"
+
+import { useEffect, useState } from 'react';
+
+import Keyboard from "./components/keyboard";
+import Rows from "./components/guess";
+import { Game, GameInfo, AssignKeyboard } from "./components/game";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+const [letters, setLetters] = useState<string[]>([])
+const [contains, setContains] = useState<string[]>([])
+const [correct, setCorrect] = useState<string[]>([])
+
+const [game, setGame] = useState<GameInfo>(Game)
+
+function getGuess(params: []) {
+  if (game.round >= game.total || game.status == 'WIN') return
+  let newGuess = [...game.guess]
+  newGuess[game.round] = params
+  setGame({...game, guess: newGuess })
+}
+
+function submitGuess(newWord: [string]) {
+  
+  if (game.round >= game.total) return
+
+  // go through each word in the submitted word to find used/correct
+  newWord.map((w, ind) => {
+    let index = game.correct.indexOf(w)
+    if (index >= 0) contains.push(w)
+    if (game.correct[ind] == w) correct.push(w)
+    letters.push(w)
+  })
+
+  // set unique letters
+  let newLetters = [...new Set(letters)]
+  let newContains = [...new Set(contains)]
+  let newCorrect = [...new Set(correct)]
+
+  setLetters(newLetters)
+  setCorrect(newCorrect)
+  setContains(newContains)
+
+  // color in the keys that match
+  game.keys.map((keyRow, rowIndex) => {
+    keyRow.map((key, keyIndex) => {
+      var keyClass = letters.indexOf(key) >= 0 ? "used": ""
+      if (contains.indexOf(key) >= 0) {
+        keyClass = "contains"
+      }
+      if (correct.indexOf(key) >= 0) {
+        keyClass = "correct"  
+      }
+      game.keyClass[rowIndex][keyIndex] = keyClass
+    })
+  })
+
+  // color in the guesses
+  game.guess.map((_, rowIndex) => {
+    var totalCorrect = 0
+    game.correct.map((key, keyIndex) => {
+      let guessKey = game.guess[rowIndex][keyIndex]
+      var keyClass = ""
+      if (contains.indexOf(guessKey) >= 0) {
+        keyClass = "contains"
+      }
+      if (key == guessKey) {
+        keyClass = "correct"
+        totalCorrect += 1
+      }
+      game.guessClass[rowIndex][keyIndex] = keyClass
+      if (totalCorrect >= 5) game.status = "WIN"
+    })
+  })
+
+  setGame({...game, round: game.round+1})
+}
+
+function gameReset() {
+  setLetters([])
+  setCorrect([])
+  setContains([])
+  setGame({
+    ...game,
+    status: 'PLAY',
+    guess: [[], [], [], [], []],
+    correct: ["H", "A", "P", "P", "Y"],
+    round: 0,
+    total: 5,
+    keys: AssignKeyboard(),
+    keyClass: [[],[],[]],
+    guessClass: [[], [], [], [], []]
+  })
+}
+
+useEffect(() => {
+  if (game.correct.length > 0) return
+  gameReset()
+})
+
+return (
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+
+      <h1>RANDLE</h1>
+        
+      <main className="row-start-2 items-center text-center py-10">
+
+        <span className={'alert ' + game.status.toLowerCase()}>{game.status}</span>
+        
+        <Rows game={game} />
+        
+        <Keyboard game={game} getGuess={getGuess} submitGuess={submitGuess} />
+
+        <span className='items-center justify-items-center'>
+          <button className='key-start' onClick={gameReset}>RANDOMIZE</button>
+        </span>
+
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+
+      <footer className="row-start-3 flex flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://github.com/alexshive/randle"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
+          Github project
         </a>
       </footer>
     </div>
