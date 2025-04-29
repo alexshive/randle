@@ -57,11 +57,12 @@ h1 {
 
 .alert {
   @apply flex flex-auto justify-center py-2 mb-5;
-  @apply bg-green-900;
+  @apply bg-green-500 text-white font-bold dark:bg-green-900;
+  @apply hidden;
 }
 
-.alert.play {
-  @apply hidden;
+.alert .win { 
+  @apply visible;
 }
 
 .key {

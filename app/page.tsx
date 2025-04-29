@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import Keyboard from "./components/keyboard";
 import Rows from "./components/guess";
-import { Game, GameInfo, AssignKeyboard } from "./components/game";
+import { Game, GameInfo, AssignKeyboard, words } from "./components/game";
 
 export default function Home() {
 
@@ -15,7 +15,7 @@ const [correct, setCorrect] = useState<string[]>([])
 const [game, setGame] = useState<GameInfo>(Game)
 
 function getGuess(params: []) {
-  if (game.round >= game.total || game.status == 'WIN') return
+  if (game.round >= game.guess.length || game.status == 'WIN') return
   let newGuess = [...game.guess]
   newGuess[game.round] = params
   setGame({...game, guess: newGuess })
@@ -23,7 +23,7 @@ function getGuess(params: []) {
 
 function submitGuess(newWord: [string]) {
   
-  if (game.round >= game.total) return
+  if (game.round >= game.guess.length) return
 
   // go through each word in the submitted word to find used/correct
   newWord.map((w, ind) => {
@@ -58,7 +58,7 @@ function submitGuess(newWord: [string]) {
 
   // color in the guesses
   game.guess.map((_, rowIndex) => {
-    var totalCorrect = 0
+    var correct = 0
     game.correct.map((key, keyIndex) => {
       let guessKey = game.guess[rowIndex][keyIndex]
       var keyClass = ""
@@ -67,10 +67,10 @@ function submitGuess(newWord: [string]) {
       }
       if (key == guessKey) {
         keyClass = "correct"
-        totalCorrect += 1
+        correct += 1
       }
       game.guessClass[rowIndex][keyIndex] = keyClass
-      if (totalCorrect >= 5) game.status = "WIN"
+      if (correct >= game.correct.length) game.status = "WIN"
     })
   })
 
@@ -78,16 +78,26 @@ function submitGuess(newWord: [string]) {
 }
 
 function gameReset() {
+  
   setLetters([])
   setCorrect([])
   setContains([])
+
+  const wordsArray = words.toUpperCase().split(' ')
+  const randomNumber = Math.floor(Math.random() * wordsArray.length)
+  const randomWord = wordsArray[randomNumber]
+
+  if (randomWord == '') return
+
+  const word = randomWord.split('')
+  const guesses = Array(5).fill('')
+
   setGame({
     ...game,
     status: 'PLAY',
-    guess: [[], [], [], [], []],
-    correct: ["H", "A", "P", "P", "Y"],
+    guess: guesses,
+    correct: word,
     round: 0,
-    total: 5,
     keys: AssignKeyboard(),
     keyClass: [[],[],[]],
     guessClass: [[], [], [], [], []]
@@ -95,8 +105,7 @@ function gameReset() {
 }
 
 useEffect(() => {
-  if (game.correct.length > 0) return
-  gameReset()
+  if (game.status == '') gameReset()
 })
 
 return (
@@ -106,15 +115,15 @@ return (
         
       <main className="row-start-2 items-center text-center py-10">
 
+        <span className='items-center justify-items-center'>
+          <button className='key-start' onClick={gameReset}>RANDOMIZE</button>
+        </span>
+        
         <span className={'alert ' + game.status.toLowerCase()}>{game.status}</span>
         
         <Rows game={game} />
         
         <Keyboard game={game} getGuess={getGuess} submitGuess={submitGuess} />
-
-        <span className='items-center justify-items-center'>
-          <button className='key-start' onClick={gameReset}>RANDOMIZE</button>
-        </span>
 
       </main>
 

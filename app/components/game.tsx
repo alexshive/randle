@@ -3,7 +3,6 @@ export const Game: GameInfo = {
     correct: [],
     guess: [[]],
     round: 0,
-    total: 0,
     keys: [],
     keyClass: [],
     guessClass: []
@@ -14,7 +13,6 @@ export interface GameInfo {
     correct: string[]
     guess: string[][]
     round: number,
-    total: number,
     keys: string[][],
     keyClass: string[][],
     guessClass: string[][]
@@ -33,3 +31,5 @@ export interface GameInfo {
         })
     })
   }
+
+  export const words = "happy drive sound"

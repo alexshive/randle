@@ -40,13 +40,13 @@ export default function Keyboard({
     }
 
     if (letter == 'ENTER') {
-      if (newWord.length < 5) return
+      if (newWord.length < game.correct.length) return
       setWord([])
       submitGuess(newWord)
       return
     }
 
-    if (word.length >= 5) return
+    if (word.length >= game.correct.length) return
 
     getGuess([...newWord, letter])
     setWord([...newWord, letter])
