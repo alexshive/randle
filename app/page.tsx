@@ -14,14 +14,14 @@ const [correct, setCorrect] = useState<string[]>([])
 
 const [game, setGame] = useState<GameInfo>(Game)
 
-function getGuess(params: []) {
+function getGuess(params: string[]) {
   if (game.round >= game.guess.length || game.status == 'WIN') return
   const newGuess = [...game.guess]
   newGuess[game.round] = params
   setGame({...game, guess: newGuess })
 }
 
-function submitGuess(newWord: [string]) {
+function submitGuess(newWord: string[]) {
   
   if (game.round >= game.guess.length) return
 
