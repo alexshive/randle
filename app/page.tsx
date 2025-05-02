@@ -8,10 +8,6 @@ import { Game, GameInfo, AssignKeyboard, words } from "./components/game";
 
 export default function Home() {
 
-const [letters, setLetters] = useState<string[]>([])
-const [contains, setContains] = useState<string[]>([])
-const [correct, setCorrect] = useState<string[]>([])
-
 const [game, setGame] = useState<GameInfo>(Game)
 
 function getGuess(params: string[]) {
@@ -25,58 +21,60 @@ function submitGuess(newWord: string[]) {
   
   if (game.round >= game.guess.length) return
 
+  let guessClass: string[] = []
+
+  // remove letters to avoid extra contain colors
+  let remaining: string[] = [...game.correct]
+
   // go through each word in the submitted word to find used/correct
+
+  // check for correct, remove in remaining
   newWord.map((w, ind) => {
-    const index = game.correct.indexOf(w)
-    if (index >= 0) contains.push(w)
-    if (game.correct[ind] == w) correct.push(w)
-    letters.push(w)
+    // correct match
+    let className = 'used'
+    if (game.correct[ind] == w) {
+      (game.letters.correct as string[]).push(w)
+      className = 'correct'
+      remaining[ind] = ''
+    }
+    guessClass.push(className)
   })
 
-  setLetters([...new Set(letters)])
-  setCorrect([...new Set(contains)])
-  setContains([...new Set(correct)])
+  // loop again (combine?), check remaining
+  newWord.map((w, ind) => {
+    let className = guessClass[ind]
+    let remainingIndex = remaining.indexOf(w)
+    if (remainingIndex >= 0 && game.correct.indexOf(w) >= 0) {
+      (game.letters.contains as string[]).push(w)
+      className = 'contains'
+      remaining[remainingIndex] = ''
+    }
+    (game.letters.used as string[]).push(w)
+    guessClass[ind] = className
+  })
 
-  // color in the keys that match
   game.keys.map((keyRow, rowIndex) => {
     keyRow.map((key, keyIndex) => {
-      let keyClass = letters.indexOf(key) >= 0 ? "used": ""
-      if (contains.indexOf(key) >= 0) {
+      let keyClass = game.keyClass[rowIndex][keyIndex]
+      if ((game.letters.used as string[]).indexOf(key) >= 0 && (game.letters.correct as string[]).indexOf(key) < 0) {
+        keyClass = "used"
+      }
+      if ((game.letters.contains as string[]).indexOf(key) >= 0 && (game.letters.correct as string[]).indexOf(key) < 0) {
         keyClass = "contains"
       }
-      if (correct.indexOf(key) >= 0) {
-        keyClass = "correct"  
+      if ((game.letters.correct as string[]).indexOf(key) >= 0) {
+        keyClass = "correct"
       }
       game.keyClass[rowIndex][keyIndex] = keyClass
     })
   })
 
-  // color in the guesses
-  game.guess.map((_, rowIndex) => {
-    let correct = 0
-    game.correct.map((key, keyIndex) => {
-      const guessKey = game.guess[rowIndex][keyIndex]
-      let keyClass = ""
-      if (contains.indexOf(guessKey) >= 0) {
-        keyClass = "contains"
-      }
-      if (key == guessKey) {
-        keyClass = "correct"
-        correct += 1
-      }
-      game.guessClass[rowIndex][keyIndex] = keyClass
-      if (correct >= game.correct.length) game.status = "WIN"
-    })
-  })
+  game.guessClass[game.round] = guessClass
 
   setGame({...game, round: game.round+1})
 }
 
 function gameReset() {
-  
-  setLetters([])
-  setCorrect([])
-  setContains([])
 
   const wordsArray = words.toUpperCase().split(' ')
   const randomNumber = Math.floor(Math.random() * wordsArray.length)
@@ -95,7 +93,10 @@ function gameReset() {
     round: 0,
     keys: AssignKeyboard(),
     keyClass: [[],[],[]],
-    guessClass: [[], [], [], [], []]
+    guessClass: [[], [], [], [], []],
+    letters: {
+      used: [], contains: [], correct: []
+    }
   })
 }
 

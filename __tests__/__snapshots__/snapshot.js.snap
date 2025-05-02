@@ -1,0 +1,382 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <div
+    class="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+  >
+    <h1>
+      RANDLE
+    </h1>
+    <main
+      class="row-start-2 items-center text-center py-10"
+    >
+      <span
+        class="items-center justify-items-center"
+      >
+        <button
+          class="key-start"
+        >
+          RANDOMIZE
+        </button>
+      </span>
+      <span
+        class="alert play"
+      >
+        PLAY
+      </span>
+      <div
+        class="rows"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+          <div
+            class="col undefined"
+          />
+        </div>
+      </div>
+      <div
+        class="keyboard"
+      >
+        <div
+          class="keys"
+        >
+          <button
+            aria-label="Key: Q"
+            class="key-Q key undefined"
+            type="button"
+            value="Q"
+          >
+            Q
+          </button>
+          <button
+            aria-label="Key: W"
+            class="key-W key undefined"
+            type="button"
+            value="W"
+          >
+            W
+          </button>
+          <button
+            aria-label="Key: E"
+            class="key-E key undefined"
+            type="button"
+            value="E"
+          >
+            E
+          </button>
+          <button
+            aria-label="Key: R"
+            class="key-R key undefined"
+            type="button"
+            value="R"
+          >
+            R
+          </button>
+          <button
+            aria-label="Key: T"
+            class="key-T key undefined"
+            type="button"
+            value="T"
+          >
+            T
+          </button>
+          <button
+            aria-label="Key: Y"
+            class="key-Y key undefined"
+            type="button"
+            value="Y"
+          >
+            Y
+          </button>
+          <button
+            aria-label="Key: U"
+            class="key-U key undefined"
+            type="button"
+            value="U"
+          >
+            U
+          </button>
+          <button
+            aria-label="Key: I"
+            class="key-I key undefined"
+            type="button"
+            value="I"
+          >
+            I
+          </button>
+          <button
+            aria-label="Key: O"
+            class="key-O key undefined"
+            type="button"
+            value="O"
+          >
+            O
+          </button>
+          <button
+            aria-label="Key: P"
+            class="key-P key undefined"
+            type="button"
+            value="P"
+          >
+            P
+          </button>
+        </div>
+        <div
+          class="keys"
+        >
+          <button
+            aria-label="Key: A"
+            class="key-A key undefined"
+            type="button"
+            value="A"
+          >
+            A
+          </button>
+          <button
+            aria-label="Key: S"
+            class="key-S key undefined"
+            type="button"
+            value="S"
+          >
+            S
+          </button>
+          <button
+            aria-label="Key: D"
+            class="key-D key undefined"
+            type="button"
+            value="D"
+          >
+            D
+          </button>
+          <button
+            aria-label="Key: F"
+            class="key-F key undefined"
+            type="button"
+            value="F"
+          >
+            F
+          </button>
+          <button
+            aria-label="Key: G"
+            class="key-G key undefined"
+            type="button"
+            value="G"
+          >
+            G
+          </button>
+          <button
+            aria-label="Key: H"
+            class="key-H key undefined"
+            type="button"
+            value="H"
+          >
+            H
+          </button>
+          <button
+            aria-label="Key: J"
+            class="key-J key undefined"
+            type="button"
+            value="J"
+          >
+            J
+          </button>
+          <button
+            aria-label="Key: K"
+            class="key-K key undefined"
+            type="button"
+            value="K"
+          >
+            K
+          </button>
+          <button
+            aria-label="Key: L"
+            class="key-L key undefined"
+            type="button"
+            value="L"
+          >
+            L
+          </button>
+        </div>
+        <div
+          class="keys"
+        >
+          <button
+            aria-label="Key: ENTER"
+            class="key-ENTER key undefined"
+            type="button"
+            value="ENTER"
+          >
+            ENTER
+          </button>
+          <button
+            aria-label="Key: Z"
+            class="key-Z key undefined"
+            type="button"
+            value="Z"
+          >
+            Z
+          </button>
+          <button
+            aria-label="Key: X"
+            class="key-X key undefined"
+            type="button"
+            value="X"
+          >
+            X
+          </button>
+          <button
+            aria-label="Key: C"
+            class="key-C key undefined"
+            type="button"
+            value="C"
+          >
+            C
+          </button>
+          <button
+            aria-label="Key: V"
+            class="key-V key undefined"
+            type="button"
+            value="V"
+          >
+            V
+          </button>
+          <button
+            aria-label="Key: B"
+            class="key-B key undefined"
+            type="button"
+            value="B"
+          >
+            B
+          </button>
+          <button
+            aria-label="Key: N"
+            class="key-N key undefined"
+            type="button"
+            value="N"
+          >
+            N
+          </button>
+          <button
+            aria-label="Key: M"
+            class="key-M key undefined"
+            type="button"
+            value="M"
+          >
+            M
+          </button>
+          <button
+            aria-label="Key: DEL"
+            class="key-DEL key undefined"
+            type="button"
+            value="DEL"
+          >
+            DEL
+          </button>
+        </div>
+      </div>
+    </main>
+    <footer
+      class="row-start-3 flex flex-wrap items-center justify-center"
+    >
+      <a
+        class="flex items-center gap-2 hover:underline hover:underline-offset-4"
+        href="https://github.com/alexshive/randle"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Github project
+      </a>
+    </footer>
+  </div>
+</div>
+`;

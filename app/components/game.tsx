@@ -5,7 +5,12 @@ export const Game: GameInfo = {
     round: 0,
     keys: [],
     keyClass: [],
-    guessClass: []
+    guessClass: [],
+    letters: {
+        used: [],
+        correct: [],
+        contains: []
+      }
 } satisfies GameInfo
 
 export interface GameInfo {
@@ -15,7 +20,14 @@ export interface GameInfo {
     round: number,
     keys: string[][],
     keyClass: string[][],
-    guessClass: string[][]
+    guessClass: string[][],
+    letters: Letters
+  }
+
+  export interface Letters {
+    used: string[],
+    correct: string[],
+    contains: string[]
   }
 
   export const DefaultKeys = [
