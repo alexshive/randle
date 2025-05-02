@@ -21,10 +21,10 @@ function submitGuess(newWord: string[]) {
   
   if (game.round >= game.guess.length) return
 
-  let guessClass: string[] = []
+  const guessClass: string[] = []
 
   // remove letters to avoid extra contain colors
-  let remaining: string[] = [...game.correct]
+  const remaining: string[] = [...game.correct]
 
   // go through each word in the submitted word to find used/correct
 
@@ -43,7 +43,7 @@ function submitGuess(newWord: string[]) {
   // loop again (combine?), check remaining
   newWord.map((w, ind) => {
     let className = guessClass[ind]
-    let remainingIndex = remaining.indexOf(w)
+    const remainingIndex = remaining.indexOf(w)
     if (remainingIndex >= 0 && game.correct.indexOf(w) >= 0) {
       (game.letters.contains as string[]).push(w)
       className = 'contains'
