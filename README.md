@@ -1,5 +1,7 @@
 # Randle
 
+### [View Demo](https://alexshive.github.io/randle/)
+
 Similar to Wordle ...with extras. Uses existing list of words with extra features. 
 
 Built with React and Tailwind. Can run on static page and is flexible to be easily ported to native apps.

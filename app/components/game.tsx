@@ -44,4 +44,13 @@ export interface GameInfo {
     })
   }
 
+  export const Messages = [
+    'Genius',
+    'Magnificent',
+    'Impressive',
+    'Splendid',
+    'Great',
+    'Phew'
+]
+
   export const words = "happy drive sound"
